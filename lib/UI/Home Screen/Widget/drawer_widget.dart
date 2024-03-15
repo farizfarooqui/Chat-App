@@ -8,14 +8,14 @@ class DrawerWidget extends StatelessWidget {
     final _auth = AuthService();
     await _auth.signOut();
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (_) => LoginScreen()));
+        context, MaterialPageRoute(builder: (_) => const LoginScreen()));
     print('logout');
   }
   @override
   Widget build(BuildContext context) {
     return Drawer(
           child: Padding(
-            padding: EdgeInsets.only(top: 60),
+            padding: const EdgeInsets.only(top: 60),
             child: Column(
               children: [
                 ListTile(

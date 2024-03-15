@@ -1,4 +1,3 @@
-
 import 'package:chatapp/Auth%20Service/auth_service.dart';
 import 'package:chatapp/UI/Authentication%20Screens/login_screen.dart';
 import 'package:chatapp/UI/Authentication%20Screens/widgets/button_widget.dart';
@@ -41,6 +40,16 @@ class SignUpScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       extendBody: true,
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: CircleAvatar(
+                backgroundColor: Colors.black26,
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                ))),
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarBrightness: Brightness.light,
           statusBarIconBrightness: Brightness.light,

@@ -9,14 +9,6 @@ import 'package:flutter/services.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-  logout(context) async {
-    final _auth = AuthService();
-    await _auth.signOut();
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (_) => LoginScreen()));
-    print('logout');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,15 +25,8 @@ class HomeScreen extends StatelessWidget {
               statusBarColor: Colors.transparent),
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
-          actions: [
-            IconButton(
-                onPressed: () {
-                  logout(context);
-                },
-                icon: const Icon(Icons.logo_dev))
-          ],
         ),
-        drawer: DrawerWidget(),
+        drawer: const DrawerWidget(),
         body: const Center(child: Text('Hello Fariz keep the hardwork')));
   }
 }

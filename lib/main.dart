@@ -1,4 +1,5 @@
 import 'package:chatapp/Auth%20Service/auth_gate.dart';
+import 'package:chatapp/UI/Authentication%20Screens/auth_screen.dart';
 import 'package:chatapp/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
