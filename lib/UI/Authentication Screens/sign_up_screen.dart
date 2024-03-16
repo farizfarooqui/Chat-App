@@ -1,4 +1,4 @@
-import 'package:chatapp/Auth%20Service/auth_service.dart';
+import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/UI/Authentication%20Screens/login_screen.dart';
 import 'package:chatapp/UI/Authentication%20Screens/widgets/button_widget.dart';
 import 'package:chatapp/UI/Authentication%20Screens/widgets/foreground_widget.dart';
@@ -20,7 +20,7 @@ class SignUpScreen extends StatelessWidget {
       await authService.registerWithEmailAndPasword(
           _emailController.text.trim(), _passwordController.text.trim());
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+          context, MaterialPageRoute(builder: (_) => HomeScreen()));
     } on Exception catch (e) {
       showDialog(
           context: context,

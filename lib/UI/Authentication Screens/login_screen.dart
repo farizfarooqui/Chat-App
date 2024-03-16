@@ -1,4 +1,4 @@
-import 'package:chatapp/Auth%20Service/auth_service.dart';
+import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/UI/Authentication%20Screens/forgot_pass_screen.dart';
 import 'package:chatapp/UI/Authentication%20Screens/sign_up_screen.dart';
 import 'package:chatapp/UI/Authentication%20Screens/widgets/button_widget.dart';
@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
           emailContoller.text.trim(), passwordContoller.text.trim());
 
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+          context, MaterialPageRoute(builder: (_) => HomeScreen()));
     } catch (e) {
       showDialog(
           context: context,

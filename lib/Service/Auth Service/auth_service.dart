@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class AuthService {
   //Intance of firebaseAuth
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  // Intance of firebasefirestore
 
   // login method
   Future<UserCredential> signInWithEmailAndPassword(
@@ -29,6 +32,7 @@ class AuthService {
     }
   }
 
+  //storing data in firebase
   //logout method
   Future<void> signOut() async {
     await _auth.signOut();
