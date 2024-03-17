@@ -32,9 +32,29 @@ class HomeScreen extends StatelessWidget {
         drawer: const DrawerWidget(),
         body: const Center(child: Text('Hello Fariz keep the hardwork')));
   }
-// Widget _buildUserList(){
-//   return StreamBuilder(stream: _chatService.getUserStream() , builder: (context , snapshot){
-//     return
-//   });
-// }
+
+  // Widget _buildUserList() {
+  //   return StreamBuilder(
+  //       stream: _chatService.getUserStream(),
+  //       builder: (context, snapshot) {
+  //         if (snapshot.hasError) {
+  //           return Text('data');
+  //         } else if (snapshot.connectionState == ConnectionState.waiting) {
+  //           return CircularProgressIndicator();
+  //         } else {
+  //           return ListView(
+  //             children: snapshot.data!
+  //                 .map<Widget>((userData) => _buildUserListItem)
+  //                 .toList(),
+  //           );
+  //         }
+  //       });
+  // }
+
+  // //build indivitual user list tile
+  // Widget _buildUserListItem(
+  //     Map<String, dynamic> userData, BuildContext context) {
+  //   //display all users except current user
+  //   return ListTile();
+  // }
 }
