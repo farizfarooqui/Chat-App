@@ -1,3 +1,4 @@
+import 'package:chatapp/UI/Authentication%20Screens/widgets/user_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Service/Chat%20service/char_service.dart';
@@ -34,7 +35,8 @@ class HomeScreen extends StatelessWidget {
         } else {
           return ListView(
             children: snapshot.data!
-                .map<Widget>((userData) => _buildUserListItem(userData, context))
+                .map<Widget>(
+                    (userData) => _buildUserListItem(userData, context))
                 .toList(),
           );
         }
@@ -42,21 +44,11 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildUserListItem(Map<String, dynamic> userData, BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15), 
-      ),
-      child: ListTile(
-        onTap: () {
-        },
-        leading: CircleAvatar(
-          backgroundColor: Colors.blue,
-          child: Icon(Icons.person),
-        ),
-        title: Text(userData['name']),
-        subtitle: Text(userData['email']),
-      ),
+  Widget _buildUserListItem(
+      Map<String, dynamic> userData, BuildContext context) {
+    return UserTileWidget(
+      text: userData['email'],
+      ontap: () {},
     );
   }
 }
