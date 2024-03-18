@@ -2,7 +2,7 @@ import 'package:chatapp/UI/Authentication%20Screens/widgets/user_tile.dart';
 import 'package:chatapp/UI/Home%20Screen/Chat%20screen/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
-import 'package:chatapp/Service/Chat%20service/char_service.dart';
+import 'package:chatapp/Service/Chat%20service/chat_service.dart';
 import 'package:chatapp/UI/Home%20Screen/Widget/drawer_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       drawer: const DrawerWidget(),
-      body: _buildUserList(),
+      body: _buildUserList(), // Include _buildUserList() here
     );
   }
 
@@ -34,6 +34,7 @@ class HomeScreen extends StatelessWidget {
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         } else {
+          print('Data: ${snapshot.data}');
           return ListView(
             children: snapshot.data!
                 .map<Widget>(
@@ -47,11 +48,16 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildUserListItem(
       Map<String, dynamic> userData, BuildContext context) {
+    print('object user data $userData');
     return UserTileWidget(
       text: userData['email'],
       ontap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (_) => ChatScreen()));
+            context,
+            MaterialPageRoute(
+                builder: (_) => ChatScreen(
+                      recieverEmail: userData['email'],
+                    )));
       },
     );
   }

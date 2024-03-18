@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 class UserTileWidget extends StatelessWidget {
   final String text;
   final void Function()? ontap;
-  const UserTileWidget({super.key, required this.text,required this.ontap});
+  const UserTileWidget({super.key, required this.text, required this.ontap});
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.grey[200],
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
