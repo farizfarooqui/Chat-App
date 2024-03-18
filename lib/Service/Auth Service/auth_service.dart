@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // Intance of firebasefirestore
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // login method
   Future<UserCredential> signInWithEmailAndPassword(
@@ -26,13 +28,18 @@ class AuthService {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
+
+      //storing data in firebase
+      _firestore
+          .collection('Users')
+          .doc(userCredential.user!.uid)
+          .set({'uid': userCredential.user!.uid, 'email': email});
       return userCredential;
     } catch (e) {
       throw Exception(e);
     }
   }
 
-  //storing data in firebase
   //logout method
   Future<void> signOut() async {
     await _auth.signOut();

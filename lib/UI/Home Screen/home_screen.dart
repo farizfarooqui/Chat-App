@@ -1,4 +1,5 @@
 import 'package:chatapp/UI/Authentication%20Screens/widgets/user_tile.dart';
+import 'package:chatapp/UI/Home%20Screen/Chat%20screen/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Service/Chat%20service/char_service.dart';
@@ -48,7 +49,10 @@ class HomeScreen extends StatelessWidget {
       Map<String, dynamic> userData, BuildContext context) {
     return UserTileWidget(
       text: userData['email'],
-      ontap: () {},
+      ontap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => ChatScreen()));
+      },
     );
   }
 }
