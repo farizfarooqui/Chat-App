@@ -18,10 +18,14 @@ class SignUpScreen extends StatelessWidget {
     final authService = AuthService();
     try {
       await authService.registerWithEmailAndPasword(
-          _emailController.text.trim(), _passwordController.text.trim());
+        _emailController.text.trim(),
+        _passwordController.text.trim(),
+        _fullNameController.text.trim(),
+      );
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (_) => HomeScreen()));
     } on Exception catch (e) {
+      print(e);
       showDialog(
           context: context,
           builder: (context) {
@@ -70,11 +74,14 @@ class SignUpScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                   const Text(
-                    'Welcome',
-                    style: TextStyle(fontSize: 30, color: Colors.white),
+                    'Create Account',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 30,
+                        color: Colors.white),
                   ),
                   const Text(
-                    'Glad to see you',
+                    'to get Started now!',
                     style: TextStyle(fontSize: 30, color: Colors.white),
                   ),
                   SizedBox(

@@ -1,5 +1,4 @@
 import 'package:chatapp/UI/Authentication%20Screens/auth_screen.dart';
-import 'package:chatapp/UI/Authentication%20Screens/login_screen.dart';
 import 'package:chatapp/UI/Home%20Screen/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
