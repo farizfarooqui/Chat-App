@@ -8,6 +8,11 @@ class AuthService {
   // Intance of firebasefirestore
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // getting current user
+  User? getCurrentUser() {
+    return _auth.currentUser;
+  }
+
   // login method
   Future<UserCredential> signInWithEmailAndPassword(
       String email, password) async {
@@ -22,7 +27,7 @@ class AuthService {
 
   //Sign up method
   Future<UserCredential> registerWithEmailAndPasword(
-      String email, password, name) async {
+      String email, password, String name) async {
     try {
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(

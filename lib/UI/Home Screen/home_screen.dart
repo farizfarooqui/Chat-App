@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       drawer: const DrawerWidget(),
-      body: _buildUserList(), // Include _buildUserList() here
+      body: _buildUserList(),
     );
   }
 
@@ -48,17 +48,23 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildUserListItem(
       Map<String, dynamic> userData, BuildContext context) {
-    print('object user data $userData');
-    return UserTileWidget(
-      text: userData['email'],
-      ontap: () {
-        Navigator.push(
+    if (userData['email'] != _authService.getCurrentUser()!.email) {
+      return UserTileWidget(
+        text: userData['fullName'],
+        ontap: () {
+          Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (_) => ChatScreen(
-                      recieverEmail: userData['email'],
-                    )));
-      },
-    );
+              builder: (_) => ChatScreen(
+                recieverEmail: userData['email'],
+                name: userData['fullName'],
+              ),
+            ),
+          );
+        },
+      );
+    } else {
+      return Container();
+    }
   }
 }
