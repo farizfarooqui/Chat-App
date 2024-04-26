@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:chatapp/models/message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -18,10 +21,45 @@ class ChatService {
   }
 
   //send msg
-  Future<void> sendMessage(String recieverEmail, String message) async {
+  Future<void> sendMessage(String receiverID, String message) async {
     //get the current user
-    final String userId = _auth.currentUser!.uid;
-    final String userEmail = _auth.currentUser!.email!;
-    final Timestamp  timestamp =Timestamp.now();
+    final String currentUserId = _auth.currentUser!.uid;
+    final String currentUserEmail = _auth.currentUser!.email!;
+    final Timestamp timestamp = Timestamp.now();
+
+    //create new message
+    Message newMessage = Message(
+      senderId: currentUserId,
+      senderEmail: currentUserEmail,
+      receiverID: receiverID,
+      message: message,
+      timestamp: timestamp,
+    );
+
+    //contructing chat room id for two users
+    List<String> id = [receiverID, currentUserId];
+    id.sort();
+    String chatroomId = id.join("-");
+
+    await _firestore
+        .collection('Chat-rooms')
+        .doc(chatroomId)
+        .collection('messages')
+        .add(newMessage.toMap());
+  }
+
+  //getting message
+  Stream<QuerySnapshot> getMessage(String userId, String otherUserId) {
+    //construct a chatroom id for twto users
+    List ids = [userId, otherUserId];
+    ids.sort();
+    String chatroomId = ids.join('-');
+
+    return _firestore
+        .collection('Chat-rooms')
+        .doc(chatroomId)
+        .collection('messages')
+        .orderBy('timestamp', descending: false)
+        .snapshots();
   }
 }

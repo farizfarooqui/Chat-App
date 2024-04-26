@@ -1,14 +1,16 @@
-class ClassName {
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class Message {
   final String senderId;
   final String senderEmail;
-  final String recieverID;
+  final String receiverID;
   final String message;
-  final String timestamp;
+  final Timestamp timestamp;
 
-  ClassName({
+  Message({
     required this.senderId,
     required this.senderEmail,
-    required this.recieverID,
+    required this.receiverID,
     required this.message,
     required this.timestamp,
   });
@@ -17,7 +19,7 @@ class ClassName {
     return {
       'senderId': senderId,
       'senderEmail': senderEmail,
-      'recieverID': recieverID,
+      'receiverID': receiverID,
       'message': message,
       'timestamp': timestamp,
     };
