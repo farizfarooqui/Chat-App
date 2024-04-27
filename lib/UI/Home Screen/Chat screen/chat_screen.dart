@@ -1,7 +1,10 @@
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Service/Chat%20service/chat_service.dart';
+import 'package:chatapp/UI/Home%20Screen/Widget/message_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 // ignore: must_be_immutable
 class ChatScreen extends StatelessWidget {
@@ -69,36 +72,60 @@ class ChatScreen extends StatelessWidget {
     bool isCurrentUser = data['senderId'] == _authService.getCurrentUser()!.uid;
     var alignment =
         isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
-
-    return Container(alignment: alignment, child: Text(data['message']));
+    return Container(
+        alignment: alignment,
+        child: MessageTile(
+            message: data['message'],
+            isCurrentUser: isCurrentUser,
+            timestamp: Timestamp.now()));
   }
 
   Widget _buildUserInput() {
-    return TextFormField(
-      controller: messageTextController,
-      obscureText: false,
-      cursorColor: Colors.black,
-      decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.grey[300],
-          hintText: 'Type your message',
-          hintStyle:
-              const TextStyle(color: Colors.black, fontWeight: FontWeight.w300),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: const BorderSide(color: Colors.white, width: 1.0),
+    return Padding(
+      padding: EdgeInsets.only(bottom: 10, right: 10, left: 10),
+      child: Row(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(left: 8, right: 8),
+              child: TextFormField(
+                controller: messageTextController,
+                obscureText: false,
+                cursorColor: Colors.black,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey[300],
+                  hintText: 'Type your message',
+                  hintStyle: const TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w300),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(2)),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(2),
+                    borderSide:
+                        const BorderSide(color: Colors.white, width: 1.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(2),
+                    borderSide: const BorderSide(color: Colors.black, width: 1),
+                  ),
+                ),
+              ),
+            ),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: const BorderSide(color: Colors.white, width: 2.0),
-          ),
-          suffixIcon: IconButton(
+          Container(
+            decoration:
+                BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+            child: IconButton(
               onPressed: sendMessage,
               icon: Icon(
-                Icons.arrow_outward_rounded,
-                color: Colors.black,
-              ))),
+                Icons.play_arrow_rounded,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
