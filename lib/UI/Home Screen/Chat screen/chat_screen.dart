@@ -2,9 +2,7 @@ import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Service/Chat%20service/chat_service.dart';
 import 'package:chatapp/UI/Home%20Screen/Widget/message_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 // ignore: must_be_immutable
 class ChatScreen extends StatelessWidget {
