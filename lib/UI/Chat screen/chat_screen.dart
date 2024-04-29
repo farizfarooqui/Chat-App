@@ -1,6 +1,6 @@
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Service/Chat%20service/chat_service.dart';
-import 'package:chatapp/UI/Home%20Screen/Widget/message_tile.dart';
+import 'package:chatapp/UI/Chat%20screen/Widgets/message_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 

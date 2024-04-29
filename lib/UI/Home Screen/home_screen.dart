@@ -1,5 +1,5 @@
 import 'package:chatapp/UI/Authentication%20Screens/widgets/user_tile.dart';
-import 'package:chatapp/UI/Home%20Screen/Chat%20screen/chat_screen.dart';
+import 'package:chatapp/UI/Chat%20screen/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Service/Chat%20service/chat_service.dart';
