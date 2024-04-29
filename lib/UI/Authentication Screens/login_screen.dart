@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await authService.signInWithEmailAndPassword(
           emailContoller.text.trim(), passwordContoller.text.trim());
-
+          
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (_) => HomeScreen()));
     } catch (e) {

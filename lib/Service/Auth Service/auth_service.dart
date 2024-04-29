@@ -25,6 +25,22 @@ class AuthService {
     }
   }
 
+  Future<String> getUserName() async {
+    try {
+      DocumentSnapshot snapshot = await _firestore
+          .collection('Users')
+          .doc(_auth.currentUser!.uid)
+          .get();
+      if (snapshot.exists) {
+        return snapshot['fullName'];
+      } else {
+        return 'User';
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   //Sign up method
   Future<UserCredential> registerWithEmailAndPasword(
       String email, password, String name) async {

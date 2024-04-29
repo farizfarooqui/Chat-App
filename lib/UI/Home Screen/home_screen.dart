@@ -14,13 +14,30 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: const Text(
-          'Hey Fariz',
-          style: TextStyle(color: Colors.blue),
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.grey,
+        elevation: 0,
+        title: FutureBuilder<String>(
+          future: _authService.getUserName(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Text('Loading...');
+            } else {
+              if (snapshot.hasError) {
+                return const Text('Error');
+              } else {
+                return Text(
+                  'Hey ${snapshot.data.toString()}!',
+                  style: const TextStyle(),
+                );
+              }
+            }
+          },
         ),
       ),
-      drawer: const DrawerWidget(),
+      drawer: DrawerWidget(),
       body: _buildUserList(),
     );
   }
