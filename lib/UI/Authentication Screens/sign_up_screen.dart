@@ -4,6 +4,7 @@ import 'package:chatapp/UI/Authentication%20Screens/widgets/button_widget.dart';
 import 'package:chatapp/UI/Authentication%20Screens/widgets/foreground_widget.dart';
 import 'package:chatapp/UI/Authentication%20Screens/widgets/text_field_widget.dart';
 import 'package:chatapp/UI/Home%20Screen/home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,8 +23,21 @@ class SignUpScreen extends StatelessWidget {
         _passwordController.text.trim(),
         _fullNameController.text.trim(),
       );
+      DocumentSnapshot<Map<String, dynamic>> userData = await FirebaseFirestore
+          .instance
+          .collection('Users')
+          .doc(_emailController.text)
+          .get();
+      String userName = userData['fullName'];
+      String userEmail = userData['email'];
+
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => HomeScreen()));
+          context,
+          MaterialPageRoute(
+              builder: (_) => HomeScreen(
+                    userName: userName,
+                    userEmail: userEmail,
+                  )));
     } on Exception catch (e) {
       print(e);
       showDialog(

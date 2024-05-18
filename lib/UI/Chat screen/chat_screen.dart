@@ -1,12 +1,9 @@
-// import 'dart:js';
-
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Service/Chat%20service/chat_service.dart';
 import 'package:chatapp/Themes/theme_provider.dart';
 import 'package:chatapp/UI/Chat%20screen/Widgets/message_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
@@ -59,7 +56,9 @@ class ChatScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: _buildMessageList(),
+            child: Container(
+                color: isDarkMood ? Colors.grey.shade900 : Colors.blue.shade100,
+                child: _buildMessageList()),
           ),
           _buildUserInput(isDarkMood)
         ],
@@ -111,7 +110,7 @@ class ChatScreen extends StatelessWidget {
         children: [
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 8, right: 8),
+              padding: EdgeInsets.only(left: 8, right: 8, top: 8),
               child: TextFormField(
                 controller: messageTextController,
                 obscureText: false,
@@ -127,16 +126,16 @@ class ChatScreen extends StatelessWidget {
                     fontWeight: FontWeight.w300,
                   ),
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(2)),
+                      borderRadius: BorderRadius.circular(4)),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(2),
+                    borderRadius: BorderRadius.circular(4),
                     borderSide: BorderSide(
                       color: isDarkMood ? Colors.transparent : Colors.white,
                       width: 1.0,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(2),
+                    borderRadius: BorderRadius.circular(4),
                     borderSide: const BorderSide(color: Colors.black, width: 1),
                   ),
                 ),

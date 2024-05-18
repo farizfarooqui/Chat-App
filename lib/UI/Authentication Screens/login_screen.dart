@@ -5,6 +5,7 @@ import 'package:chatapp/UI/Authentication%20Screens/widgets/button_widget.dart';
 import 'package:chatapp/UI/Authentication%20Screens/widgets/foreground_widget.dart';
 import 'package:chatapp/UI/Authentication%20Screens/widgets/text_field_widget.dart';
 import 'package:chatapp/UI/Home%20Screen/home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -24,9 +25,21 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await authService.signInWithEmailAndPassword(
           emailContoller.text.trim(), passwordContoller.text.trim());
+      DocumentSnapshot<Map<String, dynamic>> userData = await FirebaseFirestore
+          .instance
+          .collection('Users')
+          .doc(emailContoller.text)
+          .get();
+      String userName = userData['fullName'];
+      String userEmail = userData['email'];
 
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => HomeScreen()));
+          context,
+          MaterialPageRoute(
+              builder: (_) => HomeScreen(
+                    userName: userName,
+                    userEmail: userEmail,
+                  )));
     } catch (e) {
       showDialog(
           context: context,
@@ -66,13 +79,11 @@ class _LoginScreenState extends State<LoginScreen> {
         shadowColor: Colors.transparent,
       ),
       body: GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus
-            ?.unfocus(),
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: ForegroundWidget(
           children: [
             SingleChildScrollView(
-              physics:
-                  const NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.only(top: 60, left: 20, right: 20),
                 child: Column(mainAxisSize: MainAxisSize.min, children: [

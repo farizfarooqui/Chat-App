@@ -8,7 +8,9 @@ import 'package:chatapp/UI/Home%20Screen/Widget/drawer_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key});
+  final String userName;
+  final String userEmail;
+  HomeScreen({Key? key, required this.userName, required this.userEmail});
 
   final ChatService _chatService = ChatService();
   final AuthService _authService = AuthService();
@@ -20,36 +22,20 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: isDarkMood ? Colors.grey.shade900 : Colors.blue.shade100,
       appBar: AppBar(
-        foregroundColor: isDarkMood ? Colors.grey.shade600 : Colors.white,
-        backgroundColor:
-            isDarkMood ? Colors.grey.shade900 : Colors.blue.shade300,
-        elevation: 0,
-        title: FutureBuilder<String>(
-          future: _authService.getUserName(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text(
-                'Loading...',
-                style: TextStyle(
-                  color: isDarkMood ? Colors.grey.shade600 : Colors.white,
-                ),
-              );
-            } else {
-              if (snapshot.hasError) {
-                return const Text('Error');
-              } else {
-                return Text(
-                  'Hey ${snapshot.data.toString()}!',
-                  style: TextStyle(
-                    color: isDarkMood ? Colors.grey.shade600 : Colors.white,
-                  ),
-                );
-              }
-            }
-          },
-        ),
+          foregroundColor: isDarkMood ? Colors.grey.shade600 : Colors.white,
+          backgroundColor:
+              isDarkMood ? Colors.grey.shade900 : Colors.blue.shade300,
+          elevation: 0,
+          title: Text(
+            userName,
+            style: TextStyle(
+              color: isDarkMood ? Colors.grey.shade600 : Colors.white,
+            ),
+          )),
+      drawer: DrawerWidget(
+        userName: userName,
+        userEmail: userEmail,
       ),
-      drawer: DrawerWidget(),
       body: _buildUserList(),
     );
   }

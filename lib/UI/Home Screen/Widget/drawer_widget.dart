@@ -7,7 +7,9 @@ import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class DrawerWidget extends StatelessWidget {
-  DrawerWidget({super.key});
+  final String userName;
+  final String userEmail;
+  DrawerWidget({super.key, required this.userName, required this.userEmail});
   logout(context) async {
     final _auth = AuthService();
     await _auth.signOut();
@@ -28,6 +30,20 @@ class DrawerWidget extends StatelessWidget {
           children: [
             ListTile(
               leading: CircleAvatar(),
+              title: Text(
+                userName,
+                style: TextStyle(
+                    color: isDarkMood
+                        ? Colors.grey.shade200
+                        : Colors.grey.shade800),
+              ),
+              subtitle: Text(
+                userEmail,
+                style: TextStyle(
+                    color: isDarkMood
+                        ? Colors.grey.shade200
+                        : Colors.grey.shade800),
+              ),
             ),
             ListTile(
               title: Text(
@@ -74,7 +90,7 @@ class DrawerWidget extends StatelessWidget {
                   activeTrackColor: Colors.grey.shade500,
                   activeColor: Colors.grey.shade800,
                   inactiveTrackColor: Colors.blue.shade100,
-                  inactiveThumbColor: Colors.blue.shade200,
+                  inactiveThumbColor: Colors.blue.shade600,
                   value: Provider.of<ThemeProvider>(context, listen: false)
                       .isDarkModeOn,
                   onChanged: ((value) {

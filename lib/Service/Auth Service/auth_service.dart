@@ -52,7 +52,7 @@ class AuthService {
       );
 
       //storing data in firebase
-      _firestore.collection('Users').doc(userCredential.user!.uid).set(
+      _firestore.collection('Users').doc(email).set(
         {
           'uid': userCredential.user!.uid,
           'email': email,
