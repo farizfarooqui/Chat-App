@@ -23,7 +23,7 @@ class MessageTile extends StatelessWidget {
       padding: EdgeInsets.only(right: 15, left: 15),
       decoration: BoxDecoration(
           color: isCurrentUser
-              ? (isDarkMood ? Colors.green.shade600 : Colors.green.shade500)
+              ? (isDarkMood ? Colors.blue.shade600 : Colors.blue.shade200)
               : (isDarkMood ? Colors.grey.shade800 : Colors.grey.shade200),
           borderRadius: BorderRadius.circular(6)),
       child: Stack(

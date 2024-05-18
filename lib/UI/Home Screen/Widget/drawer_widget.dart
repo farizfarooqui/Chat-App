@@ -73,8 +73,8 @@ class DrawerWidget extends StatelessWidget {
                 trailing: Switch(
                   activeTrackColor: Colors.grey.shade500,
                   activeColor: Colors.grey.shade800,
-                  inactiveTrackColor: Colors.grey.shade500,
-                  inactiveThumbColor: Colors.grey.shade200,
+                  inactiveTrackColor: Colors.blue.shade100,
+                  inactiveThumbColor: Colors.blue.shade200,
                   value: Provider.of<ThemeProvider>(context, listen: false)
                       .isDarkModeOn,
                   onChanged: ((value) {

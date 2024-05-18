@@ -1,8 +1,13 @@
+// import 'dart:js';
+
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Service/Chat%20service/chat_service.dart';
+import 'package:chatapp/Themes/theme_provider.dart';
 import 'package:chatapp/UI/Chat%20screen/Widgets/message_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class ChatScreen extends StatelessWidget {
@@ -29,20 +34,34 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMood =
+        Provider.of<ThemeProvider>(context, listen: false).isDarkModeOn;
     return Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {},
+          icon: Icon(
+            Icons.arrow_back,
+            color: isDarkMood ? Colors.grey.shade500 : Colors.white,
+          ),
+        ),
+        backgroundColor: isDarkMood ? Colors.transparent : Colors.blue.shade300,
         foregroundColor: Colors.grey,
         elevation: 0,
-        title: Text(name),
+        title: Text(
+          name,
+          style: TextStyle(
+            color: isDarkMood ? Colors.grey.shade500 : Colors.white,
+          ),
+        ),
       ),
       body: Column(
         children: [
           Expanded(
             child: _buildMessageList(),
           ),
-          _buildUserInput()
+          _buildUserInput(isDarkMood)
         ],
       ),
     );
@@ -58,16 +77,18 @@ class ChatScreen extends StatelessWidget {
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         } else {
+          bool isDarkMood =
+              Provider.of<ThemeProvider>(context, listen: false).isDarkModeOn;
           return ListView(
               children: snapshot.data!.docs
-                  .map((doc) => _buildMessageItem(doc))
+                  .map((doc) => _buildMessageItem(doc, isDarkMood))
                   .toList());
         }
       },
     );
   }
 
-  Widget _buildMessageItem(DocumentSnapshot doc) {
+  Widget _buildMessageItem(DocumentSnapshot doc, isDarkMood) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
     //message alignment
@@ -75,6 +96,7 @@ class ChatScreen extends StatelessWidget {
     var alignment =
         isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
     return Container(
+        color: isDarkMood ? Colors.grey.shade900 : Colors.blue.shade100,
         alignment: alignment,
         child: MessageTile(
             message: data['message'],
@@ -82,7 +104,7 @@ class ChatScreen extends StatelessWidget {
             timestamp: Timestamp.now()));
   }
 
-  Widget _buildUserInput() {
+  Widget _buildUserInput(isDarkMood) {
     return Padding(
       padding: EdgeInsets.only(bottom: 10, right: 10, left: 10),
       child: Row(
@@ -96,16 +118,22 @@ class ChatScreen extends StatelessWidget {
                 cursorColor: Colors.black,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Colors.grey[300],
+                  fillColor: isDarkMood ? Colors.grey[600] : Colors.blue[100],
                   hintText: 'Type your message',
-                  hintStyle: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w300),
+                  hintStyle: TextStyle(
+                    color: isDarkMood
+                        ? Colors.grey.shade900
+                        : Colors.grey.shade800,
+                    fontWeight: FontWeight.w300,
+                  ),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(2)),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(2),
-                    borderSide:
-                        const BorderSide(color: Colors.white, width: 1.0),
+                    borderSide: BorderSide(
+                      color: isDarkMood ? Colors.transparent : Colors.white,
+                      width: 1.0,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(2),
@@ -116,8 +144,10 @@ class ChatScreen extends StatelessWidget {
             ),
           ),
           Container(
-            decoration:
-                BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+            decoration: BoxDecoration(
+              color: isDarkMood ? Colors.grey.shade800 : Colors.blue.shade700,
+              shape: BoxShape.circle,
+            ),
             child: IconButton(
               onPressed: sendMessage,
               icon: Icon(

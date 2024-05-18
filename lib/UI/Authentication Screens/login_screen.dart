@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await authService.signInWithEmailAndPassword(
           emailContoller.text.trim(), passwordContoller.text.trim());
-          
+
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (_) => HomeScreen()));
     } catch (e) {
@@ -42,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       extendBody: true,
@@ -66,12 +67,12 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus
-            ?.unfocus(), // Hide keyboard when tapping outside
+            ?.unfocus(),
         child: ForegroundWidget(
           children: [
             SingleChildScrollView(
-              // physics:
-              //     const NeverScrollableScrollPhysics(), // Initially prevent scrolling
+              physics:
+                  const NeverScrollableScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.only(top: 60, left: 20, right: 20),
                 child: Column(mainAxisSize: MainAxisSize.min, children: [

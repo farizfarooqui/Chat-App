@@ -1,9 +1,11 @@
+import 'package:chatapp/Themes/theme_provider.dart';
 import 'package:chatapp/UI/Authentication%20Screens/widgets/user_tile.dart';
 import 'package:chatapp/UI/Chat%20screen/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Service/Chat%20service/chat_service.dart';
 import 'package:chatapp/UI/Home%20Screen/Widget/drawer_widget.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key});
@@ -13,24 +15,34 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMood =
+        Provider.of<ThemeProvider>(context, listen: true).isDarkModeOn;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: isDarkMood ? Colors.grey.shade900 : Colors.blue.shade100,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.grey,
+        foregroundColor: isDarkMood ? Colors.grey.shade600 : Colors.white,
+        backgroundColor:
+            isDarkMood ? Colors.grey.shade900 : Colors.blue.shade300,
         elevation: 0,
         title: FutureBuilder<String>(
           future: _authService.getUserName(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Text('Loading...');
+              return Text(
+                'Loading...',
+                style: TextStyle(
+                  color: isDarkMood ? Colors.grey.shade600 : Colors.white,
+                ),
+              );
             } else {
               if (snapshot.hasError) {
                 return const Text('Error');
               } else {
                 return Text(
                   'Hey ${snapshot.data.toString()}!',
-                  style: const TextStyle(),
+                  style: TextStyle(
+                    color: isDarkMood ? Colors.grey.shade600 : Colors.white,
+                  ),
                 );
               }
             }

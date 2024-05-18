@@ -20,11 +20,11 @@ class UserTileWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(left: 8, right: 8, top: 5),
         child: ListTile(
-          tileColor: isDarkMood ? Colors.grey.shade800 : Colors.grey.shade400,
+          tileColor: isDarkMood ? Colors.grey.shade800 : Colors.grey.shade100,
           leading: CircleAvatar(
             child: Icon(
               Icons.person,
-              color: isDarkMood ? Colors.grey.shade200 : Colors.grey.shade800,
+              color: isDarkMood ? Colors.grey.shade200 : Colors.white,
             ),
           ),
           title: Text(
