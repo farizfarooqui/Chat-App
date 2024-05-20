@@ -89,7 +89,6 @@ class ChatScreen extends StatelessWidget {
 
   Widget _buildMessageItem(DocumentSnapshot doc, isDarkMood) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-
     //message alignment
     bool isCurrentUser = data['senderId'] == _authService.getCurrentUser()!.uid;
     var alignment =
@@ -112,6 +111,10 @@ class ChatScreen extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(left: 8, right: 8, top: 8),
               child: TextFormField(
+                style: TextStyle(
+                  color:
+                      isDarkMood ? Colors.grey.shade900 : Colors.grey.shade800,
+                ),
                 controller: messageTextController,
                 obscureText: false,
                 cursorColor: Colors.black,

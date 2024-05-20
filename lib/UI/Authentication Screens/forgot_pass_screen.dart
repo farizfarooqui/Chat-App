@@ -36,6 +36,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                     child: Text(
                       'Forgot Password',
                       textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 20),
                     ),
                   ),
                   SizedBox(
@@ -48,7 +49,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                   ),
                   const TextFieldHeader(
                     text: 'Email',
-                    textColor: Colors.black,
+                    textColor: Colors.white,
                     letterSpacing: 2,
                   ),
                   CustomTextField(
@@ -62,8 +63,8 @@ class ForgetPasswordScreen extends StatelessWidget {
                   CustomButton(
                     text: 'Send Resend Link',
                     height: 50,
-                    backgroundColor: Colors.black,
-                    borderColor: Colors.black,
+                    backgroundColor: Colors.transparent,
+                    borderColor: Colors.white,
                     textColor: Colors.white,
                     onPressed: () {},
                   )

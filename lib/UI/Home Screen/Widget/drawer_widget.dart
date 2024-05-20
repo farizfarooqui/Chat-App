@@ -45,6 +45,11 @@ class DrawerWidget extends StatelessWidget {
                         : Colors.grey.shade800),
               ),
             ),
+            Divider(
+              indent: 20,
+              endIndent: 20,
+              // height: 7,
+            ),
             ListTile(
               title: Text(
                 'H O M E',
