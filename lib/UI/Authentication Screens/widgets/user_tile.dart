@@ -33,12 +33,6 @@ class UserTileWidget extends StatelessWidget {
                 color:
                     isDarkMood ? Colors.grey.shade200 : Colors.grey.shade800),
           ),
-          trailing: Text(
-            '9:04 AM',
-            style: TextStyle(
-                color:
-                    isDarkMood ? Colors.grey.shade200 : Colors.grey.shade800),
-          ),
         ),
       ),
     );

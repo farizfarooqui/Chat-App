@@ -61,4 +61,13 @@ class ChatService {
         .orderBy('timestamp', descending: false)
         .snapshots();
   }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getRecentMessages(String userId) {
+    return _firestore
+        .collection('Messages')
+        .where('receiverId', isEqualTo: userId)
+        .orderBy('timestamp', descending: true)
+        .limit(1)
+        .snapshots();
+  }
 }
