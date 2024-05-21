@@ -37,7 +37,9 @@ class ChatScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: Icon(
             Icons.arrow_back,
             color: isDarkMood ? Colors.grey.shade500 : Colors.white,
