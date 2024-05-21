@@ -99,7 +99,8 @@ class ChatScreen extends StatelessWidget {
         child: MessageTile(
             message: data['message'],
             isCurrentUser: isCurrentUser,
-            timestamp: Timestamp.now()));
+            timestamp: data['timestamp']
+            ));
   }
 
   Widget _buildUserInput(isDarkMood) {
