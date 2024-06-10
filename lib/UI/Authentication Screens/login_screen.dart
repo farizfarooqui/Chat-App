@@ -1,14 +1,15 @@
+import 'package:chatapp/Constant/app_colors.dart';
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/UI/Authentication%20Screens/forgot_pass_screen.dart';
 import 'package:chatapp/UI/Authentication%20Screens/sign_up_screen.dart';
 import 'package:chatapp/UI/Authentication%20Screens/widgets/button_widget.dart';
 import 'package:chatapp/UI/Authentication%20Screens/widgets/foreground_widget.dart';
+import 'package:chatapp/UI/Authentication%20Screens/widgets/icon_button.dart';
 import 'package:chatapp/UI/Authentication%20Screens/widgets/text_field_widget.dart';
 import 'package:chatapp/UI/Home%20Screen/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 
@@ -195,28 +196,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     //Buttons
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Expanded(
-                          child: CustomButton(
-                              text: 'Google',
-                              height: 50,
-                              backgroundColor: Colors.white,
-                              borderColor: Colors.transparent,
-                              textColor: Colors.black,
-                              onPressed: () {}),
+                        CustomIconButton(
+                          imagePath: 'assets/images/icons/facebook.png',
+                          backgroundColor: AppColors.white,
+                          borderColor: Colors.white,
+                          height: 50,
+                          width: 170,
                         ),
-                        const SizedBox(
-                          width: 10,
+                        CustomIconButton(
+                          imagePath: 'assets/images/icons/google.png',
+                          backgroundColor: AppColors.white,
+                          borderColor: Colors.white,
+                          width: 170,
+                          height: 50,
+                          
                         ),
-                        Expanded(
-                          child: CustomButton(
-                              text: 'Facebook',
-                              height: 50,
-                              backgroundColor: Colors.white,
-                              borderColor: Colors.transparent,
-                              textColor: Colors.black,
-                              onPressed: () {}),
-                        )
                       ],
                     ),
                     const SizedBox(
@@ -254,3 +250,30 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
+// Row(
+//                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                     children: [
+//                       CustomIconButton(
+//                         imagePath: 'assets/images/icons/facebook.png',
+//                         backgroundColor: AppColors.whiteColor,
+//                         borderColor: AppColors.lightGreyBorder,
+//                         height: 50,
+//                         width: 100,
+//                       ),
+//                       CustomIconButton(
+//                         imagePath: 'assets/images/icons/google.png',
+//                         backgroundColor: AppColors.whiteColor,
+//                         borderColor: AppColors.lightGreyBorder,
+//                         height: 50,
+//                         width: 100,
+//                       ),
+//                       CustomIconButton(
+//                         imagePath: 'assets/images/icons/amazon.png',
+//                         backgroundColor: AppColors.yellow,
+//                         borderColor: AppColors.yellow,
+//                         height: 50,
+//                         width: 100,
+//                       ),
+//                     ],
+//                   ),

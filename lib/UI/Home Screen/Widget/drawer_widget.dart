@@ -1,6 +1,7 @@
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Themes/theme_provider.dart';
 import 'package:chatapp/UI/Authentication%20Screens/auth_screen.dart';
+import 'package:chatapp/UI/Profile%20screen/profile_screen.dart';
 import 'package:chatapp/UI/Settings/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +30,15 @@ class DrawerWidget extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => ProfileScreen(
+                              userName: userName,
+                              userEmail: userEmail,
+                            )));
+              },
               leading: CircleAvatar(),
               title: Text(
                 userName,
