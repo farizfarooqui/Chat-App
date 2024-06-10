@@ -27,7 +27,7 @@ class ProfileTileWidget extends StatelessWidget {
           title: Text(
             text,
             style: TextStyle(
-              color: isDarkMood ? Colors.grey.shade600 : Colors.white,
+              color: isDarkMood ? Colors.white : Colors.white,
             ),
           ),
           trailing: icon),

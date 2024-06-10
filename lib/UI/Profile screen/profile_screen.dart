@@ -1,4 +1,6 @@
+import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Themes/theme_provider.dart';
+import 'package:chatapp/UI/Authentication%20Screens/auth_screen.dart';
 import 'package:chatapp/UI/Common%20widgets/personal_details_widget.dart';
 import 'package:chatapp/UI/Common%20widgets/tile_widget.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,13 @@ class ProfileScreen extends StatelessWidget {
   final String userEmail;
 
   ProfileScreen({super.key, required this.userName, required this.userEmail});
+  logout(context) async {
+    final _auth = AuthService();
+    await _auth.signOut();
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (_) => const AuthenticationScreen()));
+    print('logout');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +31,9 @@ class ProfileScreen extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              isDarkMood ? Colors.grey.shade900 : Colors.blue.shade300,
-              isDarkMood ? Colors.grey.shade900 : Colors.purple.shade300,
-              isDarkMood ? Colors.grey.shade900 : Colors.purple.shade300,
+              isDarkMood ? Colors.grey.shade900 : Colors.blue.shade200,
+              isDarkMood ? Colors.grey.shade900 : Colors.purple.shade200,
+              isDarkMood ? Colors.grey.shade900 : Colors.purple.shade200,
             ],
           ),
         ),
@@ -45,7 +54,9 @@ class ProfileScreen extends StatelessWidget {
                   )),
               titleAlignment: ListTileTitleAlignment.center,
               trailing: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    logout(context);
+                  },
                   icon: Icon(
                     Icons.logout,
                     color: isDarkMood ? Colors.grey.shade600 : Colors.white,
@@ -62,7 +73,7 @@ class ProfileScreen extends StatelessWidget {
               userName,
               style: TextStyle(
                 fontSize: 20,
-                color: isDarkMood ? Colors.grey.shade600 : Colors.white,
+                color: isDarkMood ? Colors.white : Colors.white,
               ),
             ),
             const SizedBox(
@@ -71,7 +82,7 @@ class ProfileScreen extends StatelessWidget {
             Text(
               userEmail,
               style: TextStyle(
-                color: isDarkMood ? Colors.grey.shade600 : Colors.white,
+                color: isDarkMood ? Colors.white : Colors.white,
               ),
             ),
             const SizedBox(

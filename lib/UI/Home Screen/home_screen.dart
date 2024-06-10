@@ -22,9 +22,18 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: isDarkMood ? Colors.grey.shade900 : Colors.blue.shade100,
       appBar: AppBar(
-          foregroundColor: isDarkMood ? Colors.grey.shade600 : Colors.white,
-          backgroundColor:
-              isDarkMood ? Colors.grey.shade900 : Colors.blue.shade300,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  isDarkMood ? Colors.grey.shade900 : Colors.blue.shade200,
+                  isDarkMood ? Colors.grey.shade900 : Colors.purple.shade200,
+                ],
+              ),
+            ),
+          ),
           elevation: 0,
           title: Text(
             userName,

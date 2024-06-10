@@ -6,131 +6,156 @@ import 'package:chatapp/UI/Settings/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// ignore: must_be_immutable
 class DrawerWidget extends StatelessWidget {
   final String userName;
   final String userEmail;
+
   DrawerWidget({super.key, required this.userName, required this.userEmail});
-  logout(context) async {
+
+  Future<void> logout(BuildContext context) async {
     final _auth = AuthService();
     await _auth.signOut();
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (_) => const AuthenticationScreen()));
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const AuthenticationScreen()),
+    );
     print('logout');
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMood =
-        Provider.of<ThemeProvider>(context, listen: false).isDarkModeOn;
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkModeOn;
     return Drawer(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 60),
-        child: Column(
-          children: [
-            ListTile(
-              onTap: () {
-                Navigator.push(
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              isDarkMode ? Colors.grey.shade900 : Colors.blue.shade200,
+              isDarkMode ? Colors.grey.shade900 : Colors.purple.shade200,
+            ],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 60),
+          child: Column(
+            children: [
+              ListTile(
+                onTap: () {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => ProfileScreen(
-                              userName: userName,
-                              userEmail: userEmail,
-                            )));
-              },
-              leading: CircleAvatar(),
-              title: Text(
-                userName,
-                style: TextStyle(
-                    color: isDarkMood
+                      builder: (_) => ProfileScreen(
+                        userName: userName,
+                        userEmail: userEmail,
+                      ),
+                    ),
+                  );
+                },
+                leading: CircleAvatar(),
+                title: Text(
+                  userName,
+                  style: TextStyle(
+                    color: isDarkMode
                         ? Colors.grey.shade200
-                        : Colors.grey.shade800),
-              ),
-              subtitle: Text(
-                userEmail,
-                style: TextStyle(
-                    color: isDarkMood
+                        : Colors.grey.shade800,
+                  ),
+                ),
+                subtitle: Text(
+                  userEmail,
+                  style: TextStyle(
+                    color: isDarkMode
                         ? Colors.grey.shade200
-                        : Colors.grey.shade800),
+                        : Colors.grey.shade800,
+                  ),
+                ),
               ),
-            ),
-            Divider(
-              indent: 20,
-              endIndent: 20,
-              // height: 7,
-            ),
-            ListTile(
-              title: Text(
-                'H O M E',
-                style: TextStyle(
-                    color: isDarkMood
+              Divider(
+                indent: 20,
+                endIndent: 20,
+              ),
+              ListTile(
+                title: Text(
+                  'H O M E',
+                  style: TextStyle(
+                    color: isDarkMode
                         ? Colors.grey.shade200
-                        : Colors.grey.shade800),
+                        : Colors.grey.shade800,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.home,
+                  color:
+                      isDarkMode ? Colors.grey.shade200 : Colors.grey.shade800,
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
               ),
-              trailing: Icon(
-                Icons.home,
-                color: isDarkMood ? Colors.grey.shade200 : Colors.grey.shade800,
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text(
-                'S E T T I N G',
-                style: TextStyle(
-                    color: isDarkMood
+              ListTile(
+                title: Text(
+                  'S E T T I N G',
+                  style: TextStyle(
+                    color: isDarkMode
                         ? Colors.grey.shade200
-                        : Colors.grey.shade800),
+                        : Colors.grey.shade800,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.settings,
+                  color:
+                      isDarkMode ? Colors.grey.shade200 : Colors.grey.shade800,
+                ),
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => SettingScreen()),
+                  );
+                },
               ),
-              trailing: Icon(
-                Icons.settings,
-                color: isDarkMood ? Colors.grey.shade200 : Colors.grey.shade800,
-              ),
-              onTap: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (_) => SettingScreen()));
-              },
-            ),
-            ListTile(
+              ListTile(
                 title: Text(
                   'D A R K  M O D E',
                   style: TextStyle(
-                      color: isDarkMood
-                          ? Colors.grey.shade200
-                          : Colors.grey.shade800),
+                    color: isDarkMode
+                        ? Colors.grey.shade200
+                        : Colors.grey.shade800,
+                  ),
                 ),
                 trailing: Switch(
                   activeTrackColor: Colors.grey.shade500,
                   activeColor: Colors.grey.shade800,
                   inactiveTrackColor: Colors.blue.shade100,
                   inactiveThumbColor: Colors.blue.shade600,
-                  value: Provider.of<ThemeProvider>(context, listen: false)
-                      .isDarkModeOn,
-                  onChanged: ((value) {
+                  value: Provider.of<ThemeProvider>(context).isDarkModeOn,
+                  onChanged: (value) {
                     Provider.of<ThemeProvider>(context, listen: false)
                         .toggleTheme();
-                  }),
-                )),
-            Spacer(),
-            ListTile(
-              title: Text(
-                'L O G O U T',
-                style: TextStyle(
-                    color: isDarkMood
+                  },
+                ),
+              ),
+              Spacer(),
+              ListTile(
+                title: Text(
+                  'L O G O U T',
+                  style: TextStyle(
+                    color: isDarkMode
                         ? Colors.grey.shade200
-                        : Colors.grey.shade800),
+                        : Colors.grey.shade800,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.logout,
+                  color:
+                      isDarkMode ? Colors.grey.shade200 : Colors.grey.shade800,
+                ),
+                onTap: () {
+                  logout(context);
+                },
               ),
-              trailing: Icon(
-                Icons.logout,
-                color: isDarkMood ? Colors.grey.shade200 : Colors.grey.shade800,
-              ),
-              onTap: () {
-                logout(context);
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
