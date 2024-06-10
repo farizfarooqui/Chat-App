@@ -1,17 +1,23 @@
-import 'dart:math';
+import 'dart:io';
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Themes/theme_provider.dart';
 import 'package:chatapp/UI/Authentication%20Screens/auth_screen.dart';
 import 'package:chatapp/UI/Common%20widgets/personal_details_widget.dart';
 import 'package:chatapp/UI/Common%20widgets/tile_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   final String userName;
   final String userEmail;
+  String? imagePath;
 
-  ProfileScreen({super.key, required this.userName, required this.userEmail});
+  ProfileScreen(
+      {super.key,
+      required this.userName,
+      required this.userEmail,
+      this.imagePath});
   logout(context) async {
     final _auth = AuthService();
     await _auth.signOut();
@@ -21,18 +27,23 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Future<void> uploadPhoto(BuildContext context) async {
-    final _auth = AuthService();
-    try {
-      await _auth.uploadPhoto();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Photo uploaded successfully')),
-      );
-      print(e);
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to upload photo: $e')),
-      );
-    }
+    // final _auth = AuthService();
+    // try {
+    //   await _auth.uploadPhoto();
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text('Photo uploaded successfully')),
+    //   );
+    //   print(e);
+    // } catch (e) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text('Failed to upload photo: $e')),
+    //   );
+    // }
+    final ImagePicker _imagePicker = ImagePicker();
+    final image = await _imagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      imagePath = image.path.toString();
+    } else {}
   }
 
   @override
@@ -88,6 +99,7 @@ class ProfileScreen extends StatelessWidget {
                     isDarkMood ? Colors.grey.shade600 : Colors.white,
                 child: Icon(
                   Icons.camera_alt,
+                  size: 30,
                   color:
                       isDarkMood ? Colors.grey.shade300 : Colors.grey.shade300,
                 ),

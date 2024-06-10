@@ -7,11 +7,9 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-        bool isDarkMood =
+    bool isDarkMood =
         Provider.of<ThemeProvider>(context, listen: false).isDarkModeOn;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -22,13 +20,35 @@ class SettingScreen extends StatelessWidget {
             color: isDarkMood ? Colors.grey.shade500 : Colors.white,
           ),
         ),
-        backgroundColor: isDarkMood ? Colors.transparent : Colors.blue.shade300,
-        foregroundColor: Colors.grey,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                isDarkMood ? Colors.grey.shade900 : Colors.blue.shade200,
+                isDarkMood ? Colors.grey.shade900 : Colors.purple.shade200,
+              ],
+            ),
+          ),
+        ),
         elevation: 0,
         title: Text(
           'Setting',
           style: TextStyle(
             color: isDarkMood ? Colors.grey.shade500 : Colors.white,
+          ),
+        ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              isDarkMood ? Colors.grey.shade900 : Colors.blue.shade200,
+              isDarkMood ? Colors.grey.shade900 : Colors.purple.shade200,
+            ],
           ),
         ),
       ),

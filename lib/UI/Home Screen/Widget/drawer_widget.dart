@@ -53,10 +53,14 @@ class DrawerWidget extends StatelessWidget {
                     ),
                   );
                 },
-                leading: CircleAvatar(),
+                leading: CircleAvatar(
+                  backgroundColor:
+                      isDarkMode ? Colors.grey.shade600 : Colors.grey.shade100,
+                ),
                 title: Text(
                   userName,
                   style: TextStyle(
+                    letterSpacing: 2,
                     color: isDarkMode
                         ? Colors.grey.shade200
                         : Colors.grey.shade800,
@@ -108,7 +112,7 @@ class DrawerWidget extends StatelessWidget {
                       isDarkMode ? Colors.grey.shade200 : Colors.grey.shade800,
                 ),
                 onTap: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => SettingScreen()),
                   );
