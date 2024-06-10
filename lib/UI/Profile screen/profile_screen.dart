@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Themes/theme_provider.dart';
 import 'package:chatapp/UI/Authentication%20Screens/auth_screen.dart';
@@ -17,6 +18,21 @@ class ProfileScreen extends StatelessWidget {
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (_) => const AuthenticationScreen()));
     print('logout');
+  }
+
+  Future<void> uploadPhoto(BuildContext context) async {
+    final _auth = AuthService();
+    try {
+      await _auth.uploadPhoto();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Photo uploaded successfully')),
+      );
+      print(e);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to upload photo: $e')),
+      );
+    }
   }
 
   @override
@@ -62,9 +78,20 @@ class ProfileScreen extends StatelessWidget {
                     color: isDarkMood ? Colors.grey.shade600 : Colors.white,
                   )),
             ),
-            CircleAvatar(
-              radius: 60,
-              backgroundColor: isDarkMood ? Colors.grey.shade600 : Colors.white,
+            GestureDetector(
+              onTap: () {
+                uploadPhoto(context);
+              },
+              child: CircleAvatar(
+                radius: 60,
+                backgroundColor:
+                    isDarkMood ? Colors.grey.shade600 : Colors.white,
+                child: Icon(
+                  Icons.camera_alt,
+                  color:
+                      isDarkMood ? Colors.grey.shade300 : Colors.grey.shade300,
+                ),
+              ),
             ),
             const SizedBox(
               height: 5,

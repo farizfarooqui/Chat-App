@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AuthService {
   //Intance of firebaseAuth
@@ -12,6 +15,8 @@ class AuthService {
   User? getCurrentUser() {
     return _auth.currentUser;
   }
+ // Instance of FirebaseStorage
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   // login method
   Future<UserCredential> signInWithEmailAndPassword(
@@ -62,6 +67,27 @@ class AuthService {
       return userCredential;
     } catch (e) {
       throw Exception(e);
+    }
+  }
+    // Upload photo and save URL to Firestore
+  Future<void> uploadPhoto() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      File file = File(pickedFile.path);
+
+      try {
+        String uid = _auth.currentUser!.uid;
+        TaskSnapshot snapshot = await _storage.ref().child('user_photos/$uid').putFile(file);
+        String downloadUrl = await snapshot.ref.getDownloadURL();
+
+        await _firestore.collection('Users').doc(uid).update({'photoUrl': downloadUrl});
+      } catch (e) {
+        throw Exception(e);
+      }
+    } else {
+      throw Exception('No image selected');
     }
   }
 

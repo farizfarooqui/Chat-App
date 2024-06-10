@@ -127,7 +127,7 @@ class DrawerWidget extends StatelessWidget {
                   activeTrackColor: Colors.grey.shade500,
                   activeColor: Colors.grey.shade800,
                   inactiveTrackColor: Colors.blue.shade100,
-                  inactiveThumbColor: Colors.blue.shade600,
+                  inactiveThumbColor: Colors.purple.shade200,
                   value: Provider.of<ThemeProvider>(context).isDarkModeOn,
                   onChanged: (value) {
                     Provider.of<ThemeProvider>(context, listen: false)
@@ -154,6 +154,9 @@ class DrawerWidget extends StatelessWidget {
                   logout(context);
                 },
               ),
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         ),
