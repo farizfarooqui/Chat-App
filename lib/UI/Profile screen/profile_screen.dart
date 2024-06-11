@@ -1,11 +1,12 @@
 import 'dart:io';
+
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
+import 'package:chatapp/Service/Upload%20image%20service/upload_image_service.dart';
 import 'package:chatapp/Themes/theme_provider.dart';
 import 'package:chatapp/UI/Authentication%20Screens/auth_screen.dart';
 import 'package:chatapp/UI/Common%20widgets/personal_details_widget.dart';
 import 'package:chatapp/UI/Common%20widgets/tile_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -18,6 +19,7 @@ class ProfileScreen extends StatelessWidget {
       required this.userName,
       required this.userEmail,
       this.imagePath});
+
   logout(context) async {
     final _auth = AuthService();
     await _auth.signOut();
@@ -26,25 +28,7 @@ class ProfileScreen extends StatelessWidget {
     print('logout');
   }
 
-  Future<void> uploadPhoto(BuildContext context) async {
-    // final _auth = AuthService();
-    // try {
-    //   await _auth.uploadPhoto();
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(content: Text('Photo uploaded successfully')),
-    //   );
-    //   print(e);
-    // } catch (e) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(content: Text('Failed to upload photo: $e')),
-    //   );
-    // }
-    final ImagePicker _imagePicker = ImagePicker();
-    final image = await _imagePicker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      imagePath = image.path.toString();
-    } else {}
-  }
+  UploadImage uploadImage = UploadImage();
 
   @override
   Widget build(BuildContext context) {
@@ -91,12 +75,13 @@ class ProfileScreen extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                uploadPhoto(context);
+                uploadImage.selectImage();
               },
               child: CircleAvatar(
                 radius: 60,
                 backgroundColor:
                     isDarkMood ? Colors.grey.shade600 : Colors.white,
+                backgroundImage: FileImage(File(uploadImage.path)),
                 child: Icon(
                   Icons.camera_alt,
                   size: 30,
