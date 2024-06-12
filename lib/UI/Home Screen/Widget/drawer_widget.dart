@@ -9,8 +9,13 @@ import 'package:provider/provider.dart';
 class DrawerWidget extends StatelessWidget {
   final String userName;
   final String userEmail;
+  final String? profileUrl;
 
-  DrawerWidget({super.key, required this.userName, required this.userEmail});
+  DrawerWidget(
+      {super.key,
+      required this.userName,
+      required this.userEmail,
+      this.profileUrl});
 
   Future<void> logout(BuildContext context) async {
     final _auth = AuthService();
@@ -49,6 +54,7 @@ class DrawerWidget extends StatelessWidget {
                       builder: (_) => ProfileScreen(
                         userName: userName,
                         userEmail: userEmail,
+                        profileUrl: profileUrl,
                       ),
                     ),
                   );
@@ -56,6 +62,9 @@ class DrawerWidget extends StatelessWidget {
                 leading: CircleAvatar(
                   backgroundColor:
                       isDarkMode ? Colors.grey.shade600 : Colors.grey.shade100,
+                  backgroundImage: profileUrl != null && profileUrl!.isNotEmpty
+                      ? NetworkImage(profileUrl!)
+                      : null,
                 ),
                 title: Text(
                   userName,

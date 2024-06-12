@@ -10,7 +10,12 @@ import 'package:provider/provider.dart';
 class HomeScreen extends StatelessWidget {
   final String userName;
   final String userEmail;
-  HomeScreen({Key? key, required this.userName, required this.userEmail});
+  final String? profileUrl;
+  HomeScreen(
+      {Key? key,
+      required this.userName,
+      required this.userEmail,
+      this.profileUrl});
 
   final ChatService _chatService = ChatService();
   final AuthService _authService = AuthService();
@@ -45,6 +50,7 @@ class HomeScreen extends StatelessWidget {
       drawer: DrawerWidget(
         userName: userName,
         userEmail: userEmail,
+        profileUrl : profileUrl
       ),
       body: _buildUserList(),
     );
@@ -59,7 +65,7 @@ class HomeScreen extends StatelessWidget {
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         } else {
-          print('Data: ${snapshot.data}');
+          // print('Data: ${snapshot.data}');
           return ListView(
             children: snapshot.data!
                 .map<Widget>(

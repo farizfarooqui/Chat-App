@@ -74,7 +74,7 @@ class ChatScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 1,
             child: isDarkMood
                 ? Image.asset(
-                    'assets/images/chat/b2.jpg',
+                    'assets/images/chat/darkBg.jpg',
                     fit: BoxFit.fill,
                   )
                 : Image.asset(

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:io';
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Service/Upload%20image%20service/upload_image_service.dart';
@@ -8,17 +10,24 @@ import 'package:chatapp/UI/Common%20widgets/tile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   final String userName;
   final String userEmail;
+  final String? profileUrl;
   String? imagePath;
 
   ProfileScreen(
       {super.key,
       required this.userName,
       required this.userEmail,
-      this.imagePath});
+      this.imagePath,
+      this.profileUrl});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   logout(context) async {
     final _auth = AuthService();
     await _auth.signOut();
@@ -27,7 +36,7 @@ class ProfileScreen extends StatelessWidget {
     print('logout');
   }
 
-  UploadImage uploadImage = UploadImage();
+  StoreImage storeImage = StoreImage();
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +59,7 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(
+            SizedBox(
               height: 24,
             ),
             ListTile(
@@ -73,27 +82,34 @@ class ProfileScreen extends StatelessWidget {
                   )),
             ),
             GestureDetector(
-              onTap: () {
-                uploadImage.selectImage();
+              onTap: () async {
+                await storeImage.selectImage(context);
+                setState(() {});
               },
               child: CircleAvatar(
                 radius: 60,
                 backgroundColor:
                     isDarkMood ? Colors.grey.shade600 : Colors.white,
-                backgroundImage: FileImage(File(uploadImage.path)),
-                child: Icon(
-                  Icons.camera_alt,
-                  size: 30,
-                  color:
-                      isDarkMood ? Colors.grey.shade300 : Colors.grey.shade300,
-                ),
+                backgroundImage: storeImage.imageUrl != null &&
+                        storeImage.imageUrl!.isNotEmpty
+                    ? NetworkImage(storeImage.imageUrl!)
+                    : null,
+                child: storeImage.imageUrl == null
+                    ? Icon(
+                        Icons.camera_alt,
+                        size: 30,
+                        color: isDarkMood
+                            ? Colors.grey.shade300
+                            : Colors.grey.shade300,
+                      )
+                    : null,
               ),
             ),
             const SizedBox(
               height: 5,
             ),
             Text(
-              userName,
+              widget.userName,
               style: TextStyle(
                 fontSize: 20,
                 color: isDarkMood ? Colors.white : Colors.white,
@@ -103,7 +119,7 @@ class ProfileScreen extends StatelessWidget {
               height: 3,
             ),
             Text(
-              userEmail,
+              widget.userEmail,
               style: TextStyle(
                 color: isDarkMood ? Colors.white : Colors.white,
               ),

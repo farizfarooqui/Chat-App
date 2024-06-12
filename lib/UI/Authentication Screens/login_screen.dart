@@ -8,6 +8,7 @@ import 'package:chatapp/UI/Authentication%20Screens/widgets/icon_button.dart';
 import 'package:chatapp/UI/Authentication%20Screens/widgets/text_field_widget.dart';
 import 'package:chatapp/UI/Home%20Screen/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -41,6 +42,11 @@ class _LoginScreenState extends State<LoginScreen> {
       String userName = userData['fullName'];
       String userEmail = userData['email'];
 
+      Reference reference = FirebaseStorage.instance
+          .ref()
+          .child('UsersProfile/${emailContoller.text.trim()}');
+      String profileUrl = await reference.getDownloadURL();
+
       setState(() {
         _isLoading = false;
       });
@@ -51,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
               builder: (_) => HomeScreen(
                     userName: userName,
                     userEmail: userEmail,
+                    profileUrl : profileUrl
                   )));
     } catch (e) {
       setState(() {
@@ -211,7 +218,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderColor: Colors.white,
                           width: 170,
                           height: 50,
-                          
                         ),
                       ],
                     ),
