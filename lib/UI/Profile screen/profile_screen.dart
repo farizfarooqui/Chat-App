@@ -94,15 +94,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         storeImage.imageUrl!.isNotEmpty
                     ? NetworkImage(storeImage.imageUrl!)
                     : null,
-                child: storeImage.imageUrl == null
-                    ? Icon(
-                        Icons.camera_alt,
-                        size: 30,
-                        color: isDarkMood
-                            ? Colors.grey.shade300
-                            : Colors.grey.shade300,
-                      )
-                    : null,
+                child:
+                    storeImage.imageUrl == null || storeImage.imageUrl!.isEmpty
+                        ? Icon(
+                            Icons.camera_alt,
+                            size: 30,
+                            color: isDarkMood
+                                ? Colors.grey.shade300
+                                : Colors.grey.shade300,
+                          )
+                        : null,
               ),
             ),
             const SizedBox(
