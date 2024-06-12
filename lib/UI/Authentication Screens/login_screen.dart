@@ -46,7 +46,6 @@ class _LoginScreenState extends State<LoginScreen> {
           .ref()
           .child('UsersProfile/${emailContoller.text.trim()}');
       String profileUrl = await reference.getDownloadURL();
-
       setState(() {
         _isLoading = false;
       });

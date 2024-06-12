@@ -10,7 +10,6 @@ class StoreImage {
   String? imageUrl;
   //Intance of firebaseAuth user
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
   // getting current user
   User? getCurrentUser() {
     return _auth.currentUser;
@@ -21,7 +20,7 @@ class StoreImage {
     final ImagePicker picker = ImagePicker();
     try {
       XFile? file = await picker.pickImage(source: ImageSource.gallery);
-      print(' heloo  ${file!.path}');
+
       if (file != null) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.green, content: Text('Image selected')));
@@ -30,6 +29,8 @@ class StoreImage {
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.red, content: Text('Image not selected')));
+      //how to setstate here
+      
     }
   }
 

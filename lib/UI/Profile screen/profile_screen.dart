@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable
-
 import 'dart:io';
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Service/Upload%20image%20service/upload_image_service.dart';
@@ -13,7 +12,7 @@ import 'package:provider/provider.dart';
 class ProfileScreen extends StatefulWidget {
   final String userName;
   final String userEmail;
-  final String? profileUrl;
+  String? profileUrl;
   String? imagePath;
 
   ProfileScreen(
@@ -38,21 +37,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   StoreImage storeImage = StoreImage();
 
+  updateProfile() async {
+    await storeImage.selectImage(context);
+    setState(() {
+      widget.profileUrl = storeImage.imageUrl;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool isDarkMood =
+    bool isDarkMode =
         Provider.of<ThemeProvider>(context, listen: true).isDarkModeOn;
     return Scaffold(
-      backgroundColor: isDarkMood ? Colors.grey.shade600 : Colors.white,
+      backgroundColor: isDarkMode ? Colors.grey.shade600 : Colors.white,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              isDarkMood ? Colors.grey.shade900 : Colors.blue.shade200,
-              isDarkMood ? Colors.grey.shade900 : Colors.purple.shade200,
-              isDarkMood ? Colors.grey.shade900 : Colors.purple.shade200,
+              isDarkMode ? Colors.grey.shade900 : Colors.blue.shade200,
+              isDarkMode ? Colors.grey.shade900 : Colors.purple.shade200,
+              isDarkMode ? Colors.grey.shade900 : Colors.purple.shade200,
             ],
           ),
         ),
@@ -69,7 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   },
                   icon: Icon(
                     Icons.arrow_back_ios,
-                    color: isDarkMood ? Colors.grey.shade600 : Colors.white,
+                    color: isDarkMode ? Colors.grey.shade600 : Colors.white,
                   )),
               titleAlignment: ListTileTitleAlignment.center,
               trailing: IconButton(
@@ -78,32 +84,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   },
                   icon: Icon(
                     Icons.logout,
-                    color: isDarkMood ? Colors.grey.shade600 : Colors.white,
+                    color: isDarkMode ? Colors.grey.shade600 : Colors.white,
                   )),
             ),
             GestureDetector(
               onTap: () async {
-                await storeImage.selectImage(context);
-                setState(() {});
+                await updateProfile();
               },
-              child: CircleAvatar(
-                radius: 60,
-                backgroundColor:
-                    isDarkMood ? Colors.grey.shade600 : Colors.white,
-                backgroundImage: storeImage.imageUrl != null &&
-                        storeImage.imageUrl!.isNotEmpty
-                    ? NetworkImage(storeImage.imageUrl!)
-                    : null,
-                child:
-                    storeImage.imageUrl == null || storeImage.imageUrl!.isEmpty
-                        ? Icon(
-                            Icons.camera_alt,
-                            size: 30,
-                            color: isDarkMood
-                                ? Colors.grey.shade300
-                                : Colors.grey.shade300,
-                          )
+              child: Stack(
+                children: [
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundColor:
+                        isDarkMode ? Colors.grey.shade600 : Colors.white,
+                    backgroundImage: widget.profileUrl != null &&
+                            widget.profileUrl!.isNotEmpty
+                        ? NetworkImage(widget.profileUrl!)
                         : null,
+                    child:
+                        widget.profileUrl == null || widget.profileUrl!.isEmpty
+                            ? Icon(
+                                Icons.camera_alt,
+                                size: 30,
+                                color: isDarkMode
+                                    ? Colors.grey.shade300
+                                    : Colors.grey.shade300,
+                              )
+                            : null,
+                  ),
+                  Positioned(
+                      right: 0,
+                      top: 1,
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.white.withOpacity(0.2),
+                        child: Icon(
+                          Icons.edit,
+                          size: 24,
+                          color: isDarkMode
+                              ? Colors.grey.shade300
+                              : Colors.grey.shade100,
+                        ),
+                      ))
+                ],
               ),
             ),
             const SizedBox(
@@ -113,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               widget.userName,
               style: TextStyle(
                 fontSize: 20,
-                color: isDarkMood ? Colors.white : Colors.white,
+                color: isDarkMode ? Colors.white : Colors.white,
               ),
             ),
             const SizedBox(
@@ -122,7 +145,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text(
               widget.userEmail,
               style: TextStyle(
-                color: isDarkMood ? Colors.white : Colors.white,
+                color: isDarkMode ? Colors.white : Colors.white,
               ),
             ),
             const SizedBox(
@@ -138,7 +161,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   right: 24,
                 ),
                 decoration: BoxDecoration(
-                  color: isDarkMood ? Colors.grey.shade600 : Colors.white,
+                  color: isDarkMode ? Colors.grey.shade600 : Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50),
@@ -158,7 +181,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       text: 'Change Password',
                       icon: Icon(
                         Icons.lock,
-                        color: isDarkMood ? Colors.grey.shade600 : Colors.white,
+                        color: isDarkMode ? Colors.grey.shade600 : Colors.white,
                       ),
                     ),
                     SizedBox(
@@ -168,9 +191,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       text: 'Settings',
                       icon: Icon(
                         Icons.settings,
-                        color: isDarkMood
+                        color: isDarkMode
                             ? Colors.grey.shade600
-                            : isDarkMood
+                            : isDarkMode
                                 ? Colors.grey.shade600
                                 : Colors.white,
                       ),
@@ -182,7 +205,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       text: 'Chats',
                       icon: Icon(
                         Icons.message,
-                        color: isDarkMood ? Colors.grey.shade600 : Colors.white,
+                        color: isDarkMode ? Colors.grey.shade600 : Colors.white,
                       ),
                     ),
                   ],

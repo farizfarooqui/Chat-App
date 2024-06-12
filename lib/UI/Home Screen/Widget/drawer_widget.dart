@@ -58,6 +58,7 @@ class DrawerWidget extends StatelessWidget {
                       ),
                     ),
                   );
+                  print('Here is the url: $profileUrl');
                 },
                 leading: CircleAvatar(
                   backgroundColor:
