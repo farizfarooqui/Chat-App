@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable
-import 'dart:io';
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Service/Upload%20image%20service/upload_image_service.dart';
 import 'package:chatapp/Themes/theme_provider.dart';

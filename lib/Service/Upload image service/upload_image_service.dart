@@ -29,8 +29,6 @@ class StoreImage {
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.red, content: Text('Image not selected')));
-      //how to setstate here
-      
     }
   }
 
