@@ -22,9 +22,11 @@ class UserTileWidget extends StatelessWidget {
         child: ListTile(
           tileColor: isDarkMood ? Colors.grey.shade800 : Colors.grey.shade100,
           leading: CircleAvatar(
+            backgroundColor:
+                isDarkMood ? Colors.grey.shade400 : Colors.purple.shade100,
             child: Icon(
               Icons.person,
-              color: isDarkMood ? Colors.grey.shade200 : Colors.white,
+              color: isDarkMood ? Colors.grey.shade600 : Colors.grey.shade100,
             ),
           ),
           title: Text(

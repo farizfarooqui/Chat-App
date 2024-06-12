@@ -34,8 +34,20 @@ class ChatScreen extends StatelessWidget {
     bool isDarkMood =
         Provider.of<ThemeProvider>(context, listen: false).isDarkModeOn;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                isDarkMood ? Colors.grey.shade900 : Colors.blue.shade200,
+                isDarkMood ? Colors.grey.shade900 : Colors.purple.shade200,
+              ],
+            ),
+          ),
+        ),
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -55,14 +67,32 @@ class ChatScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: Container(
-                color: isDarkMood ? Colors.grey.shade900 : Colors.blue.shade100,
-                child: _buildMessageList()),
+          Container(
+            height: MediaQuery.of(context).size.height * 1,
+            width: MediaQuery.of(context).size.width * 1,
+            child: isDarkMood
+                ? Image.asset(
+                    'assets/images/chat/b2.jpg',
+                    fit: BoxFit.fill,
+                  )
+                : Image.asset(
+                    'assets/images/chat/lightBg.jpg',
+                    fit: BoxFit.fill,
+                  ),
           ),
-          _buildUserInput(isDarkMood)
+          Column(
+            children: [
+              Expanded(
+                child: Container(
+                  // color: isDarkMood ? Colors.grey.shade900 : Colors.white,
+                  child: _buildMessageList(),
+                ),
+              ),
+              _buildUserInput(isDarkMood)
+            ],
+          ),
         ],
       ),
     );
@@ -96,72 +126,104 @@ class ChatScreen extends StatelessWidget {
     var alignment =
         isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
     return Container(
-        color: isDarkMood ? Colors.grey.shade900 : Colors.blue.shade100,
+        // color: isDarkMood ? Colors.grey.shade900 : Colors.blue.shade100,
+        color: Colors.transparent,
         alignment: alignment,
         child: MessageTile(
             message: data['message'],
             isCurrentUser: isCurrentUser,
-            timestamp: data['timestamp']
-            ));
+            timestamp: data['timestamp']));
   }
 
   Widget _buildUserInput(isDarkMood) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 10, right: 10, left: 10),
-      child: Row(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(left: 8, right: 8, top: 8),
-              child: TextFormField(
-                style: TextStyle(
-                  color:
-                      isDarkMood ? Colors.grey.shade900 : Colors.grey.shade800,
-                ),
-                controller: messageTextController,
-                obscureText: false,
-                cursorColor: Colors.black,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: isDarkMood ? Colors.grey[600] : Colors.blue[100],
-                  hintText: 'Type your message',
-                  hintStyle: TextStyle(
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            isDarkMood ? Colors.grey.shade900 : Colors.blue.shade200,
+            isDarkMood ? Colors.grey.shade900 : Colors.purple.shade200,
+          ],
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 10, right: 10, left: 10),
+        child: Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: 8, right: 8, top: 8),
+                child: TextFormField(
+                  style: TextStyle(
                     color: isDarkMood
                         ? Colors.grey.shade900
                         : Colors.grey.shade800,
-                    fontWeight: FontWeight.w300,
                   ),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4)),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide(
-                      color: isDarkMood ? Colors.transparent : Colors.white,
-                      width: 1.0,
+                  controller: messageTextController,
+                  obscureText: false,
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: isDarkMood ? Colors.grey[600] : Colors.white,
+                    hintText: 'Type your message',
+                    hintStyle: TextStyle(
+                      color: isDarkMood
+                          ? Colors.grey.shade900
+                          : Colors.grey.shade800,
+                      fontWeight: FontWeight.w300,
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: const BorderSide(color: Colors.black, width: 1),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(4),
+                      borderSide: BorderSide(
+                        color: isDarkMood ? Colors.transparent : Colors.white,
+                        width: 1.0,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(4),
+                      borderSide:
+                          const BorderSide(color: Colors.black, width: 1),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: isDarkMood ? Colors.grey.shade800 : Colors.blue.shade700,
-              shape: BoxShape.circle,
-            ),
-            child: IconButton(
-              onPressed: sendMessage,
-              icon: Icon(
-                Icons.play_arrow_rounded,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
+            Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: isDarkMood ? Colors.grey.shade800 : Colors.white,
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: IconButton(
+                    onPressed: sendMessage,
+                    icon: ShaderMask(
+                      shaderCallback: (rect) {
+                        return LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            isDarkMood
+                                ? Colors.grey.shade500
+                                : Colors.blue.shade300,
+                            isDarkMood
+                                ? Colors.grey.shade500
+                                : Colors.purple.shade300
+                          ],
+                        ).createShader(rect);
+                      },
+                      child: Icon(
+                        Icons.play_arrow_rounded,
+                        size: 36, // adjust the size as needed
+                      ),
+                    ),
+                  ),
+                )),
+          ],
+        ),
       ),
     );
   }

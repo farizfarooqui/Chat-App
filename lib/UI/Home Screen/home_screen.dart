@@ -20,27 +20,28 @@ class HomeScreen extends StatelessWidget {
     bool isDarkMood =
         Provider.of<ThemeProvider>(context, listen: true).isDarkModeOn;
     return Scaffold(
-      backgroundColor: isDarkMood ? Colors.grey.shade900 : Colors.blue.shade100,
+      backgroundColor: isDarkMood ? Colors.grey.shade900 : Colors.white,
       appBar: AppBar(
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  isDarkMood ? Colors.grey.shade900 : Colors.blue.shade200,
-                  isDarkMood ? Colors.grey.shade900 : Colors.purple.shade200,
-                ],
-              ),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                isDarkMood ? Colors.grey.shade900 : Colors.blue.shade200,
+                isDarkMood ? Colors.grey.shade900 : Colors.purple.shade200,
+              ],
             ),
           ),
-          elevation: 0,
-          title: Text(
-            userName,
-            style: TextStyle(
-              color: isDarkMood ? Colors.grey.shade600 : Colors.white,
-            ),
-          )),
+        ),
+        elevation: 0,
+        title: Text(
+          userName,
+          style: TextStyle(
+            color: isDarkMood ? Colors.grey.shade600 : Colors.white,
+          ),
+        ),
+      ),
       drawer: DrawerWidget(
         userName: userName,
         userEmail: userEmail,

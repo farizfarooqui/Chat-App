@@ -29,7 +29,7 @@ class MessageTile extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: BoxDecoration(
         color: isCurrentUser
-            ? (isDarkMood ? Colors.blue.shade600 : Colors.blue.shade200)
+            ? (isDarkMood ? Colors.green.shade600 : Colors.purple.shade100)
             : (isDarkMood ? Colors.grey.shade800 : Colors.grey.shade200),
         borderRadius: BorderRadius.circular(6),
       ),
@@ -44,8 +44,7 @@ class MessageTile extends StatelessWidget {
               fontSize: 16,
             ),
           ),
-          SizedBox(
-              height: 1),
+          SizedBox(height: 1),
           Text(
             formattedTimestamp,
             style: TextStyle(

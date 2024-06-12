@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:chatapp/Service/Auth%20Service/auth_service.dart';
 import 'package:chatapp/Service/Upload%20image%20service/upload_image_service.dart';
 import 'package:chatapp/Themes/theme_provider.dart';
@@ -149,9 +148,9 @@ class ProfileScreen extends StatelessWidget {
                       height: 6,
                     ),
                     ProfileTileWidget(
-                      text: 'My Orders',
+                      text: 'Settings',
                       icon: Icon(
-                        Icons.shopping_bag,
+                        Icons.settings,
                         color: isDarkMood
                             ? Colors.grey.shade600
                             : isDarkMood
