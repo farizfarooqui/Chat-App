@@ -1,5 +1,6 @@
 import 'package:chatapp/Service/Auth%20Service/auth_gate.dart';
 import 'package:chatapp/Themes/theme_provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  final messaging = FirebaseMessaging.instance;
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
