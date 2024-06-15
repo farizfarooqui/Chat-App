@@ -14,7 +14,9 @@ class AuthGate extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator(
+              color: Colors.purple.shade100,
+            ));
           } else if (snapshot.hasData) {
             User? user = snapshot.data;
             if (user != null) {
@@ -22,7 +24,9 @@ class AuthGate extends StatelessWidget {
                 future: FirebaseFirestore.instance.collection('Users').doc(user.email).get(),
                 builder: (context, userSnapshot) {
                   if (userSnapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return Center(child: CircularProgressIndicator(
+                      color: Colors.purple.shade100,
+                    ));
                   } else if (userSnapshot.hasData && userSnapshot.data != null) {
                     var userData = userSnapshot.data!.data();
                     String userName = userData?['fullName'] ?? 'No Name';

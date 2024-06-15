@@ -15,7 +15,8 @@ class AuthService {
   User? getCurrentUser() {
     return _auth.currentUser;
   }
- // Instance of FirebaseStorage
+
+  // Instance of FirebaseStorage
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
   // login method
@@ -48,7 +49,7 @@ class AuthService {
 
   //Sign up method
   Future<UserCredential> registerWithEmailAndPasword(
-      String email, password, String name) async {
+      String comfirmPassword, String email, password, String name) async {
     try {
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
@@ -62,6 +63,7 @@ class AuthService {
           'uid': userCredential.user!.uid,
           'email': email,
           'fullName': name,
+          'comfirmPassword': comfirmPassword
         },
       );
       return userCredential;
@@ -69,7 +71,8 @@ class AuthService {
       throw Exception(e);
     }
   }
-    // Upload photo and save URL to Firestore
+
+  // Upload photo and save URL to Firestore
   Future<void> uploadPhoto() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -79,10 +82,14 @@ class AuthService {
 
       try {
         String uid = _auth.currentUser!.uid;
-        TaskSnapshot snapshot = await _storage.ref().child('user_photos/$uid').putFile(file);
+        TaskSnapshot snapshot =
+            await _storage.ref().child('user_photos/$uid').putFile(file);
         String downloadUrl = await snapshot.ref.getDownloadURL();
 
-        await _firestore.collection('Users').doc(uid).update({'photoUrl': downloadUrl});
+        await _firestore
+            .collection('Users')
+            .doc(uid)
+            .update({'photoUrl': downloadUrl});
       } catch (e) {
         throw Exception(e);
       }

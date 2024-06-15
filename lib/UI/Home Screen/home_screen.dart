@@ -48,10 +48,7 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       drawer: DrawerWidget(
-        userName: userName,
-        userEmail: userEmail,
-        profileUrl : profileUrl
-      ),
+          userName: userName, userEmail: userEmail, profileUrl: profileUrl),
       body: _buildUserList(),
     );
   }
@@ -63,7 +60,10 @@ class HomeScreen extends StatelessWidget {
         if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+              child: CircularProgressIndicator(
+            color: Colors.purple.shade100,
+          ));
         } else {
           // print('Data: ${snapshot.data}');
           return ListView(

@@ -124,7 +124,6 @@ class _ChatScreenState extends State<ChatScreen> {
             children: [
               Expanded(
                 child: Container(
-                  // color: isDarkMood ? Colors.grey.shade900 : Colors.white,
                   child: _buildMessageList(),
                 ),
               ),
@@ -144,7 +143,10 @@ class _ChatScreenState extends State<ChatScreen> {
         if (snapshot.hasError) {
           return Text('error try again');
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+              child: CircularProgressIndicator(
+            color: Colors.purple.shade100,
+          ));
         } else {
           bool isDarkMood =
               Provider.of<ThemeProvider>(context, listen: false).isDarkModeOn;
@@ -165,7 +167,6 @@ class _ChatScreenState extends State<ChatScreen> {
     var alignment =
         isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
     return Container(
-        // color: isDarkMood ? Colors.grey.shade900 : Colors.blue.shade100,
         color: Colors.transparent,
         alignment: alignment,
         child: MessageTile(
@@ -257,7 +258,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       },
                       child: Icon(
                         Icons.play_arrow_rounded,
-                        size: 36, // adjust the size as needed
+                        size: 36,
                       ),
                     ),
                   ),

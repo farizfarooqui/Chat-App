@@ -54,10 +54,9 @@ class _LoginScreenState extends State<LoginScreen> {
           context,
           MaterialPageRoute(
               builder: (_) => HomeScreen(
-                    userName: userName,
-                    userEmail: userEmail,
-                    profileUrl : profileUrl
-                  )));
+                  userName: userName,
+                  userEmail: userEmail,
+                  profileUrl: profileUrl)));
     } catch (e) {
       setState(() {
         _isLoading = false;
@@ -78,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return LoadingOverlay(
       isLoading: _isLoading,
       progressIndicator: SpinKitRing(
-        color: Colors.blue,
+        color: Colors.purple.shade100,
         size: 50,
       ),
       child: Scaffold(

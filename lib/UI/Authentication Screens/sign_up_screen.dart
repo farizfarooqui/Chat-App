@@ -31,11 +31,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() {
       _isLoading = true;
     });
+    if (_passwordController.text.trim() != _confirmController.text.trim()) {
+      setState(() {
+        _isLoading = false;
+      });
+      return;
+    }
     try {
       await authService.registerWithEmailAndPasword(
         _emailController.text.trim(),
         _passwordController.text.trim(),
         _fullNameController.text.trim(),
+        _confirmController.text.trim(),
       );
       DocumentSnapshot<Map<String, dynamic>> userData = await FirebaseFirestore
           .instance
@@ -76,7 +83,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return LoadingOverlay(
       isLoading: _isLoading,
       progressIndicator: SpinKitRing(
-        color: Colors.blue,
+        color: Colors.purple.shade100,
         size: 50,
       ),
       child: Scaffold(
