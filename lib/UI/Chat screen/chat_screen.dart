@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
   final String recieverEmail;
   final String receiverID;
   final String name;
@@ -17,14 +17,51 @@ class ChatScreen extends StatelessWidget {
       required this.name,
       required this.receiverID});
 
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
   TextEditingController messageTextController = TextEditingController();
 
   final ChatService _chatService = ChatService();
+
   final AuthService _authService = AuthService();
+
+  final ScrollController scrollDownController = ScrollController();
+
+  FocusNode focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        Future.delayed(Duration(milliseconds: 500), () => scrollDown());
+      }
+    });
+
+    Future.delayed(Duration(milliseconds: 500), () => {scrollDown()});
+  }
+
+  scrollDown() {
+    scrollDownController.animateTo(
+        scrollDownController.position.maxScrollExtent,
+        duration: Duration(seconds: 1),
+        curve: Curves.fastOutSlowIn);
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    messageTextController.dispose();
+    super.dispose();
+  }
 
   void sendMessage() async {
     if (messageTextController.text.isNotEmpty) {
-      await _chatService.sendMessage(receiverID, messageTextController.text);
+      await _chatService.sendMessage(
+          widget.receiverID, messageTextController.text);
       messageTextController.clear();
     }
   }
@@ -61,7 +98,7 @@ class ChatScreen extends StatelessWidget {
         foregroundColor: Colors.grey,
         elevation: 0,
         title: Text(
-          name,
+          widget.name,
           style: TextStyle(
             color: isDarkMood ? Colors.grey.shade500 : Colors.white,
           ),
@@ -101,7 +138,7 @@ class ChatScreen extends StatelessWidget {
   Widget _buildMessageList() {
     String senderId = _authService.getCurrentUser()!.uid;
     return StreamBuilder(
-      stream: _chatService.getMessage(receiverID, senderId),
+      stream: _chatService.getMessage(widget.receiverID, senderId),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('error try again');
@@ -111,6 +148,7 @@ class ChatScreen extends StatelessWidget {
           bool isDarkMood =
               Provider.of<ThemeProvider>(context, listen: false).isDarkModeOn;
           return ListView(
+              controller: scrollDownController,
               children: snapshot.data!.docs
                   .map((doc) => _buildMessageItem(doc, isDarkMood))
                   .toList());
@@ -155,6 +193,7 @@ class ChatScreen extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(left: 8, right: 8, top: 8),
                 child: TextFormField(
+                  focusNode: focusNode,
                   style: TextStyle(
                     color: isDarkMood
                         ? Colors.grey.shade900

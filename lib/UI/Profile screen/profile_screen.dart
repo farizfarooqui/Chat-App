@@ -116,7 +116,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       top: 1,
                       child: CircleAvatar(
                         radius: 20,
-                        backgroundColor: Colors.white.withOpacity(0.2),
+                        backgroundColor: isDarkMode
+                            ? Colors.white.withOpacity(0.2)
+                            : Colors.grey.withOpacity(0.3),
                         child: Icon(
                           Icons.edit,
                           size: 24,
