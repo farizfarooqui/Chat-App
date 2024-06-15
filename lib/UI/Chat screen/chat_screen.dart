@@ -28,8 +28,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   final AuthService _authService = AuthService();
 
-  final ScrollController scrollDownController = ScrollController();
-
   FocusNode focusNode = FocusNode();
 
   @override
@@ -44,18 +42,20 @@ class _ChatScreenState extends State<ChatScreen> {
     Future.delayed(Duration(milliseconds: 500), () => {scrollDown()});
   }
 
-  scrollDown() {
-    scrollDownController.animateTo(
-        scrollDownController.position.maxScrollExtent,
-        duration: Duration(seconds: 1),
-        curve: Curves.fastOutSlowIn);
-  }
-
   @override
   void dispose() {
     focusNode.dispose();
     messageTextController.dispose();
     super.dispose();
+  }
+
+  final ScrollController _scrollDownController = ScrollController();
+
+  scrollDown() {
+    _scrollDownController.animateTo(
+        _scrollDownController.position.maxScrollExtent,
+        duration: Duration(seconds: 1),
+        curve: Curves.fastOutSlowIn);
   }
 
   void sendMessage() async {
@@ -64,6 +64,7 @@ class _ChatScreenState extends State<ChatScreen> {
           widget.receiverID, messageTextController.text);
       messageTextController.clear();
     }
+    scrollDown();
   }
 
   @override
@@ -148,7 +149,7 @@ class _ChatScreenState extends State<ChatScreen> {
           bool isDarkMood =
               Provider.of<ThemeProvider>(context, listen: false).isDarkModeOn;
           return ListView(
-              controller: scrollDownController,
+              controller: _scrollDownController,
               children: snapshot.data!.docs
                   .map((doc) => _buildMessageItem(doc, isDarkMood))
                   .toList());
@@ -192,16 +193,16 @@ class _ChatScreenState extends State<ChatScreen> {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(left: 8, right: 8, top: 8),
-                child: TextFormField(
-                  focusNode: focusNode,
+                child: TextField(
+                  focusNode: focusNode.parent,
+                  controller: messageTextController,
+                  obscureText: false,
+                  cursorColor: Colors.black,
                   style: TextStyle(
                     color: isDarkMood
                         ? Colors.grey.shade900
                         : Colors.grey.shade800,
                   ),
-                  controller: messageTextController,
-                  obscureText: false,
-                  cursorColor: Colors.black,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: isDarkMood ? Colors.grey[600] : Colors.white,
